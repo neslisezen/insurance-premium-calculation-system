@@ -1,0 +1,64 @@
+services:
+  postgres-data:
+    image: postgres:latest
+    container_name: postgres-data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_ROOT_PASSWORD=root
+      - POSTGRES_DB=datadb
+      - POSTGRES_USER=datauser
+      - POSTGRES_PASSWORD=datapassword
+
+  postgres-api:
+    image: postgres:latest
+    container_name: postgres-api
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_ROOT_PASSWORD=root
+      - POSTGRES_DB=apidb
+      - POSTGRES_USER=apiuser
+      - POSTGRES_PASSWORD=apipassword
+
+  data-service:
+    restart: on-failure
+    build:
+      context: ./data-service
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-data:5432/datadb
+      - SPRING_DATASOURCE_USERNAME=datauser
+      - SPRING_DATASOURCE_PASSWORD=datapassword
+      - SPRING_DATASOURCE_driver-class-name=org.postgresql.Driver
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres-data
+
+  premium-service:
+    restart: on-failure
+    build:
+      context: ./premium-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+
+  api-service:
+    restart: on-failure
+    build:
+      context: ./public-api-service
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-api:5432/apidb
+      - SPRING_DATASOURCE_USERNAME=apiuser
+      - SPRING_DATASOURCE_PASSWORD=apipassword
+      - SPRING_DATASOURCE_driver-class-name=org.postgresql.Driver
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - postgres-api
