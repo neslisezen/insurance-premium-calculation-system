@@ -57,7 +57,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<Object> buildResponseEntity(String message) {
         var response = BaseResponse.<Double>builder()
                 .message(message)
-                .isSuccess(false)
+                .success(false)
                 .build();
         return ResponseEntity.badRequest().body(response);
     }

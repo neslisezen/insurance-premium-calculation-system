@@ -61,7 +61,7 @@ public class CalculationApiController {
 
     private BaseResponse<TransactionResponse> createBaseResponse(TransactionResponse response) {
         return BaseResponse.<TransactionResponse>builder()
-                .isSuccess(true)
+                .success(true)
                 .message(CALCULATION_SUCCESSFUL)
                 .data(response)
                 .build();

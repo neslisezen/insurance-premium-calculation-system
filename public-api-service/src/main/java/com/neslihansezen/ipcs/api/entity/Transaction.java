@@ -42,5 +42,6 @@ public class Transaction {
         this.postcode = request.getPostcode();
         this.insurancePremium = insurancePremium;
         this.source = source;
+        this.date = LocalDateTime.now();
     }
 }

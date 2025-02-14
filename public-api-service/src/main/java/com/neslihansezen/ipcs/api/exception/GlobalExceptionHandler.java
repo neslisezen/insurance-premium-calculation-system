@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import static com.neslihansezen.ipcs.api.constants.Messages.UNKNOWN_VALIDATION_ERROR;
-import static com.neslihansezen.ipcs.api.constants.Messages.VALIDATION_ERROR;
+import static com.neslihansezen.ipcs.api.constants.Messages.*;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -75,10 +74,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(exception.getMessage());
     }
 
+    @ExceptionHandler(TransactionSaveException.class)
+    public ResponseEntity<Object> handleTransactionSaveException(final TransactionSaveException exception) {
+        return buildResponseEntity(TRANSACTION_SAVE_ERROR);
+    }
+
     private ResponseEntity<Object> buildResponseEntity(String message) {
         var response = BaseResponse.<TransactionResponse>builder()
                 .message(message)
-                .isSuccess(false)
+                .success(false)
                 .build();
         return ResponseEntity.badRequest().body(response);
     }

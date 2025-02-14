@@ -1,5 +1,6 @@
 package com.neslihansezen.ipcs.premium.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,12 +12,13 @@ import static com.neslihansezen.ipcs.premium.constant.Messages.NO_MESSAGE_AVAILA
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseResponse<T> {
     private T data;
 
     @Builder.Default
     private String message = NO_MESSAGE_AVAILABLE;
 
-    private boolean isSuccess;
+    private boolean success;
 }
 

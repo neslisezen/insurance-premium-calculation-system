@@ -1,7 +1,6 @@
 package com.neslihansezen.ipcs.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +19,6 @@ public class BaseResponse<T> {
     @Builder.Default
     private String message = NO_MESSAGE_AVAILABLE;
 
-    @JsonProperty("isSuccess")
-    private boolean isSuccess;
+    private boolean success;
 }
 

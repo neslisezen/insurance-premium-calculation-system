@@ -26,15 +26,19 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(FeignException.class)
     public ResponseEntity<Object> handleFeignException(FeignException ex) {
         String responseBody = ex.contentUTF8();
-        int messageStart = responseBody.indexOf("\"message\":\"") + 11;
-        int messageEnd = responseBody.indexOf("\"", messageStart);
-        return buildResponseEntity(responseBody.substring(messageStart, messageEnd));
+        try {
+            int messageStart = responseBody.indexOf("\"message\":\"") + 11;
+            int messageEnd = responseBody.indexOf("\"", messageStart);
+            return buildResponseEntity(responseBody.substring(messageStart, messageEnd));
+        } catch (Exception e) {
+            return buildResponseEntity(responseBody);
+        }
     }
 
     private ResponseEntity<Object> buildResponseEntity(String message) {
         var response = BaseResponse.<Double>builder()
                 .message(message)
-                .isSuccess(false)
+                .success(false)
                 .build();
         return ResponseEntity.badRequest().body(response);
     }

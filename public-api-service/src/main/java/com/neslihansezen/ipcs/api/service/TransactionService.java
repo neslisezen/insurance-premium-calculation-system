@@ -3,12 +3,15 @@ package com.neslihansezen.ipcs.api.service;
 import com.neslihansezen.ipcs.api.dto.TransactionRequest;
 import com.neslihansezen.ipcs.api.dto.TransactionResponse;
 import com.neslihansezen.ipcs.api.entity.Transaction;
+import com.neslihansezen.ipcs.api.exception.TransactionSaveException;
 import com.neslihansezen.ipcs.api.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.neslihansezen.ipcs.api.constants.Messages.TRANSACTION_SAVE_ERROR;
 
 /**
  * Service class responsible for managing transactions related to insurance premium calculations.
@@ -37,17 +40,25 @@ public class TransactionService {
     @Transactional
     public TransactionResponse saveUserInput(TransactionRequest request, String source) {
         double insurancePremium = premiumService.calculate(request);
-        return buildResponse(transactionRepository.save(new Transaction(request, insurancePremium, source)));
+        Transaction transaction = saveTransaction(request, insurancePremium, source);
+        return buildResponse(transaction);
     }
 
     public List<Transaction> getTransactions() {
         return transactionRepository.findAll();
     }
 
+    private Transaction saveTransaction(TransactionRequest request,double premium ,String source) {
+        try {
+            Transaction transaction = new Transaction(request, premium, source);
+            transactionRepository.save(transaction);
+            return transaction;
+        } catch (Exception e) {
+            throw new TransactionSaveException(TRANSACTION_SAVE_ERROR);
+        }
+    }
+
     private TransactionResponse buildResponse(Transaction transaction) {
-        return TransactionResponse.builder()
-                .id(transaction.getId())
-                .insurancePremium(transaction.getInsurancePremium())
-                .build();
+        return TransactionResponse.builder().id(transaction.getId()).insurancePremium(transaction.getInsurancePremium()).build();
     }
 }

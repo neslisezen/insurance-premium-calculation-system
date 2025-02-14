@@ -1,0 +1,249 @@
+{
+	"info": {
+		"_postman_id": "ab195e28-ca01-4722-be2e-1901b350004e",
+		"name": "ipcs - Insurance Premium Calculation Service",
+		"description": "The service calculates insurance premiums based on annual mileage, vehicle type, and registration region.EndFragment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29109879"
+	},
+	"item": [
+		{
+			"name": "Valid Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Source",
+						"value": "internalApp",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vehicle\": \"SUV\",\r\n    \"mileage\": \"10000\",\r\n    \"postcode\": \"24539\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/public",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"public"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Request - Invalid Vehicle",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Source",
+						"value": "externalApp",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vehicle\": \"123\",\r\n    \"mileage\": \"10000\",\r\n    \"postcode\": \"24539\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/public",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"public"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Request - Invalid Km",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Source",
+						"value": "internalApp",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vehicle\": \"SUV\",\r\n    \"mileage\": \"123456789\",\r\n    \"postcode\": \"24539\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/public",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"public"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Request - Invalid Postcode",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Source",
+						"value": "exampleAPP",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vehicle\": \"SUV\",\r\n    \"mileage\": \"10000\",\r\n    \"postcode\": \"53\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/public",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"public"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Request - Not Found Vehicle",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Source",
+						"value": "internalApp",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vehicle\": \"flugzeug\",\r\n    \"mileage\": \"10000\",\r\n    \"postcode\": \"24539\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/public",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"public"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Request - Not Found Postcode",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Source",
+						"value": "externalApp",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vehicle\": \"SUV\",\r\n    \"mileage\": \"10000\",\r\n    \"postcode\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/public",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"public"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All User Inputs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/public/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"public",
+						"all"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

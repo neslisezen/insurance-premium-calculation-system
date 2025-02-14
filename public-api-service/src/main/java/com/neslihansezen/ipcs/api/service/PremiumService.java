@@ -5,7 +5,10 @@ import com.neslihansezen.ipcs.api.dto.TransactionRequest;
 import com.neslihansezen.ipcs.api.exception.ExternalServiceException;
 import com.neslihansezen.ipcs.api.feign.PremiumClient;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import static com.neslihansezen.ipcs.api.constants.Messages.EXTERNAL_CONNECTION_SERVICE_ERROR;
 
 /**
  * Service class responsible for calculating the insurance premium by integrating with external services.
@@ -20,19 +23,26 @@ public class PremiumService {
 
     /**
      * Calculates the insurance premium based on the provided transaction request.
-     * It communicates with the external premium service to fetch the premium amount.
-     * If the external premium service responds with an error, an exception is thrown.
+     * This method communicates with an external premium service to fetch the premium amount.
      *
-     * @param request the transaction request containing necessary details such as
-     *                vehicle type, mileage, and postcode for calculating the premium.
-     * @return the calculated insurance premium as a double.
-     * @throws ExternalServiceException if the external premium service fails or returns
-     *                                  an error message.
+     * @param request the transaction request containing details such as vehicle type, mileage,
+     *                and postcode, which are required for calculating the insurance premium.
+     * @return the calculated insurance premium as a double value.
+     * @throws ExternalServiceException if the premium service fails or returns an invalid response.
      */
     public double calculate(TransactionRequest request) {
-        BaseResponse<Double> premiumResponse = premiumClient.getInsurancePremium(request).getBody();
-        if (!premiumResponse.isSuccess())
-            throw new ExternalServiceException(premiumResponse.getMessage());
-        return premiumResponse.getData();
+        ResponseEntity<BaseResponse<Double>> response = premiumClient.getInsurancePremium(request);
+        if (response == null) {
+            throw new ExternalServiceException(EXTERNAL_CONNECTION_SERVICE_ERROR);
+        }
+        return validateAndExtractResponse(response);
+    }
+
+    private double validateAndExtractResponse(ResponseEntity<BaseResponse<Double>> response) {
+        BaseResponse<Double> baseResponse = response.getBody();
+        if (baseResponse == null || !baseResponse.isSuccess()) {
+            throw new ExternalServiceException(baseResponse != null ? baseResponse.getMessage() : EXTERNAL_CONNECTION_SERVICE_ERROR);
+        }
+        return baseResponse.getData();
     }
 }

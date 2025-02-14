@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static com.neslihansezen.ipcs.premium.constant.Messages.PREMIUM_CALCULATED_SUCCESSFULLY;
@@ -29,7 +30,8 @@ import static com.neslihansezen.ipcs.premium.util.ResponseUtil.createBaseRespons
  * This is designed for internal communication within the microservices only.
  */
 @RequiredArgsConstructor
-@RestController("/api/v1/premiums")
+@RestController
+@RequestMapping("/api/v1/premiums")
 public class PremiumController {
 
     private final PremiumService premiumService;

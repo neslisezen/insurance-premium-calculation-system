@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 public class ResponseUtil {
     public static BaseResponse<Double> createBaseResponse(Double response, String message) {
         return BaseResponse.<Double>builder()
-                .isSuccess(true)
+                .success(true)
                 .message(message)
                 .data(response)
                 .build();
