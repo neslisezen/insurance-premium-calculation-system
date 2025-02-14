@@ -25,14 +25,16 @@ Formula for premium calculation:
 - HTTP API for third-party integration to request premium calculations.
 
 ## Microservices Architecture with BFF (Backend for Frontend) Pattern
-This system is built using a microservices architecture, with each service focused on specific tasks for flexibility, scalability, and independent deployment.
+This system is built using a **mono-repo microservices architecture**, where all services are maintained in a single repository for consistency, simplified dependency management, and easier collaboration. Each microservice is designed for **flexibility, scalability, and independent deployment** while ensuring efficient internal communication.  
 The BFF pattern is designed to streamline frontend development and ensure easier future integrations with web applications by providing a simplified, optimized backend interface.
 
 In this architecture:
 
+- **Mono-Repo Microservices**: Each service is modular but part of the same repository, improving maintainability and development efficiency.
+  
 - Microservices focus on specific tasks, such as data processing, premium calculation, and communication with external systems.
-- The Public API Microservice acts as the single point of communication for the frontend (or client). 
-- It exposes RESTful endpoints that are tailored to the needs of the frontend, making it easier for developers to interact with the backend without needing to be aware of the underlying complexities.
+
+- **BFF (Backend for Frontend)**: The **Public API Microservice** acts as the only entry point for frontend applications, optimizing communication and reducing complexity, making it easier for developers to interact with the backend without needing to be aware of the underlying complexities.
 
 ## Microservices in this System
 
@@ -110,7 +112,7 @@ spring.datasource.url=jdbc:mysql://localhost:5432/your_database_name_for_public_
 spring.datasource.username=your_username
 spring.datasource.password=your_password
 ```
-For Data API Microservice:
+For Data Microservice:
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:5432/your_database_name_for_data_service
 spring.datasource.username=your_username
