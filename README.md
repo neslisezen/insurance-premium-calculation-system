@@ -81,7 +81,7 @@ To ensure security and proper access control, authentication needs to be added f
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/neslisezen/ipcs.git](https://github.com/neslisezen/insurance-premium-calculation-system.git
+git clone https://github.com/neslisezen/insurance-premium-calculation-system.git
 ```
 
 2. Build the project:
