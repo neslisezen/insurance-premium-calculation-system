@@ -78,11 +78,10 @@ To ensure security and proper access control, authentication needs to be added f
 - **Docker Desktop**
 
 ### Steps
-1. Clone the repository and navigate into the project directory:
+1. Clone the repository:
 
 ```bash
-git clone https://github.com/neslisezen/ipcs.git
-cd ipcs
+git clone https://github.com/neslisezen/ipcs.git](https://github.com/neslisezen/insurance-premium-calculation-system.git
 ```
 
 2. Build the project:
