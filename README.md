@@ -44,7 +44,7 @@ In this architecture:
 - Validates incoming requests and forwards them to the Premium Microservice for premium calculation.
 
 ### **Premium Microservice**: Calculates and processes insurance premiums
-- Integrates with the Data Microservice to store or retrieve necessary external data for premium calculations.
+- Integrates with the Data Microservice to retrieve necessary external data for premium calculations.
 - Calculates insurance premiums based on mileage, vehicle type, and region.
 - Handles the core business logic for calculating insurance premiums based on various factors (e.g., mileage, vehicle type, region).
 
@@ -67,6 +67,7 @@ To ensure security and proper access control, authentication needs to be added f
 - **Spring Boot**
 - **Lombok**
 - **Spring Data JPA**
+- **Spring Cloud Open Feign**
 - **PostgreSQL**
 - **JUnit5 & Mockito**
 - **Docker & Docker Compose**
@@ -108,13 +109,13 @@ please add your environment variables or edit the `application.properties` file 
 
 For Public API Microservice:
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:5432/your_database_name_for_public_api
+spring.datasource.url=jdbc:postgresql://localhost:5432/your_database_name_for_public_api
 spring.datasource.username=your_username
 spring.datasource.password=your_password
 ```
 For Data Microservice:
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:5432/your_database_name_for_data_service
+spring.datasource.url=jdbc:postgresql://localhost:5432/your_database_name_for_data_service
 spring.datasource.username=your_username
 spring.datasource.password=your_password
 ```
