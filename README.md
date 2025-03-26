@@ -1,5 +1,7 @@
 # Insurance Premium Calculation Service
 
+**Languages:**  [English](README.md) | [Deutsch](README.de.md)
+
 ## About the Project
 The service calculates insurance premiums based on annual mileage, vehicle type, and registration region. 
 It uses a CSV file for regional classification and applies specific factors for mileage, vehicle type, and region to determine the premium. 
